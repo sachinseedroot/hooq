@@ -4,13 +4,15 @@ import org.json.JSONObject;
 
 
 public interface ResponseInterface {
-    interface view{
+    interface view {
         void displayDialogError(Throwable throwable);
-        void sendResult(JSONObject jsonObject);
+
+        void sendResult(Object jsonObject);
     }
 
-    interface presenter{
+    interface presenter {
         void displayDialogError(Throwable throwable);
-        void getData(JSONObject jsonObject);
+
+        void getData(String url);
     }
 }

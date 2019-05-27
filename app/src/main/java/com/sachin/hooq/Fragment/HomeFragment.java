@@ -1,6 +1,7 @@
 package com.sachin.hooq.Fragment;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sachin.hooq.Activity.MainActivity;
+import com.sachin.hooq.Controller.MainApplication;
+import com.sachin.hooq.Model.MovieResponseModel;
 import com.sachin.hooq.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HomeFragment extends Fragment {
     private Context mcontext;
@@ -38,6 +48,5 @@ public class HomeFragment extends Fragment {
         //Initialization
         hq_lbl_tv = (TextView) view.findViewById(R.id.hq_lbl_tv);
         hq_recyclerview = (RecyclerView) view.findViewById(R.id.hq_recyclerview);
-
     }
 }

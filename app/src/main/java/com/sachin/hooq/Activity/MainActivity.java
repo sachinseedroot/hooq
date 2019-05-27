@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.sachin.hooq.Base.Presenter;
+import com.sachin.hooq.Base.ResponseInterface;
+import com.sachin.hooq.Controller.MainApplication;
 import com.sachin.hooq.Fragment.DetailFragment;
 import com.sachin.hooq.Fragment.HomeFragment;
 import com.sachin.hooq.Fragment.SplashFragment;
@@ -16,7 +19,7 @@ import com.sachin.hooq.R;
 
 import java.util.Stack;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ResponseInterface.view {
 
     private Context mcontext;
     public static boolean AppInForeground;
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loadHomePage() {
+    public void loadHomePage() {
         fragmentStack.clear();
         homeFragment = new HomeFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -86,12 +89,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         AppInForeground = true;
+        MainApplication.getDBinstance();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         AppInForeground = false;
+        MainApplication.destroyInstance();
     }
 
     @Override
@@ -113,5 +119,15 @@ public class MainActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
+    }
+
+    @Override
+    public void displayDialogError(Throwable throwable) {
+
+    }
+
+    @Override
+    public void sendResult(Object jsonObject) {
+
     }
 }
