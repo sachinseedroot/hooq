@@ -1,87 +1,118 @@
 package com.sachin.hooq.Model;
 
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.util.Arrays;
-
-@Entity(tableName = "MovieResponseModelTable")
-public class MovieResponseModel {
+public class MovieResponseModel implements Parcelable {
 
 
-    @NonNull
-    @PrimaryKey
     public int _id;
 
-    @ColumnInfo(name = "title")
     public String title;
 
-    @ColumnInfo(name = "overview")
     public String overview;
 
-    @ColumnInfo(name = "release_date")
     public String release_date;
 
-    @ColumnInfo(name = "poster_path")
     public String poster_path;
 
-    @ColumnInfo(name = "genre_ids")
     public String genre_ids;
 
+//
+//    public int getId() {
+//        return _id;
+//    }
+//
+//    public void setId(int id) {
+//        this._id = id;
+//    }
+//
+//    public String gettitle() {
+//        return title;
+//    }
+//
+//    public void settitle(String id) {
+//        this.title = id;
+//    }
+//
+//    public String getoverview() {
+//        return overview;
+//    }
+//
+//    public void setoverview(String id) {
+//        this.overview = id;
+//    }
+//
+//    public String getrelease_date() {
+//        return release_date;
+//    }
+//
+//    public void setrelease_date(String id) {
+//        this.release_date = id;
+//    }
+//
+//    public String getposter_path() {
+//        return poster_path;
+//    }
+//
+//    public void setposter_path(String id) {
+//        this.poster_path = id;
+//    }
+//
+//    public String getgenre_ids() {
+//        return genre_ids;
+//    }
+//
+//    public void setgenre_ids(JSONArray id) {
+//        this.genre_ids = id.toString();
+//    }
 
-    public int getId() {
-        return _id;
+    public MovieResponseModel(JSONObject jsonObject) {
+        _id = jsonObject.optInt("_id");
+        title = jsonObject.optString("title");
+        overview = jsonObject.optString("overview");
+        release_date = jsonObject.optString("release_date");
+        poster_path = jsonObject.optString("poster_path");
+        genre_ids = jsonObject.optJSONArray("genre_ids").toString();
     }
 
-    public void setId(int id) {
-        this._id = id;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public String gettitle() {
-        return title;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(_id);
+        dest.writeString(title);
+        dest.writeString(overview);
+        dest.writeString(release_date);
+        dest.writeString(poster_path);
+        dest.writeString(genre_ids);
     }
 
-    public void settitle(String id) {
-        this.title = id;
+    public MovieResponseModel(Parcel in) {
+        this._id = in.readInt();
+        this.title = in.readString();
+        this.overview = in.readString();
+        this.release_date = in.readString();
+        this.poster_path = in.readString();
+        this.genre_ids = in.readString();
     }
 
-    public String getoverview() {
-        return overview;
-    }
+    public static final Creator<MovieResponseModel> CREATOR = new Creator<MovieResponseModel>() {
+        public MovieResponseModel createFromParcel(Parcel source) {
+            return new MovieResponseModel(source);
+        }
 
-    public void setoverview(String id) {
-        this.overview = id;
-    }
-
-    public String getrelease_date() {
-        return release_date;
-    }
-
-    public void setrelease_date(String id) {
-        this.release_date = id;
-    }
-
-    public String getposter_path() {
-        return poster_path;
-    }
-
-    public void setposter_path(String id) {
-        this.poster_path = id;
-    }
-
-    public String getgenre_ids() {
-        return genre_ids;
-    }
-
-    public void setgenre_ids(JSONArray id) {
-        this.genre_ids = id.toString();
-    }
-
+        public MovieResponseModel[] newArray(int size) {
+            return new MovieResponseModel[size];
+        }
+    };
 }
 
 

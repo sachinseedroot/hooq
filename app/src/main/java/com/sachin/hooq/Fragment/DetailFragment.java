@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.sachin.hooq.R;
 import com.sachin.hooq.Utilities.AppUtilities;
@@ -16,6 +17,8 @@ import com.sachin.hooq.Utilities.AppUtilities;
 public class DetailFragment extends Fragment {
     private Context mcontext;
     private String singleKey;
+    private TextView titleTV,yearTV,overTV;
+    private TextView titlelb,yearlb,overlb;
 
     @Override
     public void onAttach(Context context) {
@@ -49,6 +52,13 @@ public class DetailFragment extends Fragment {
             AppUtilities.showAlertDialog(mcontext, "No record found!", "Please go back and try another movie.");
             return;
         }
+
+        //Initialization
+        titleTV = (TextView) view.findViewById(R.id.titleTV);
+        yearTV = (TextView) view.findViewById(R.id.yearTV);
+        overTV = (TextView) view.findViewById(R.id.overTV);
+
+
 
 
     }

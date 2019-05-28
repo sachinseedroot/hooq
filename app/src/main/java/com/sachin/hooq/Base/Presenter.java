@@ -1,5 +1,6 @@
 package com.sachin.hooq.Base;
 
+import com.google.gson.Gson;
 import com.sachin.hooq.Network.API;
 
 import org.json.JSONObject;
@@ -36,7 +37,8 @@ public class Presenter implements ResponseInterface.presenter {
 
                     @Override
                     public void onNext(Object o) {
-                        reposneObject[0] = o;
+                        Gson gson = new Gson();
+                        reposneObject[0] = gson.toJson(o);
                     }
 
                     @Override
@@ -46,7 +48,7 @@ public class Presenter implements ResponseInterface.presenter {
 
                     @Override
                     public void onComplete() {
-                        mainview.sendResult(reposneObject);
+                        mainview.sendResult(reposneObject[0]);
                     }
                 });
     }

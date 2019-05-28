@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
     }
 
 
-    public void loadHomePage() {
+    public void loadHomePage(Bundle bundle) {
         fragmentStack.clear();
-        homeFragment = new HomeFragment();
+        homeFragment = HomeFragment.newInstance(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.enter_from_right, R.anim.hold);
         ft.add(frameLayoutContainer.getId(), homeFragment);
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
     protected void onResume() {
         super.onResume();
         AppInForeground = true;
-        MainApplication.getDBinstance();
+//        MainApplication.getDBinstance();
 
     }
 
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
     protected void onPause() {
         super.onPause();
         AppInForeground = false;
-        MainApplication.destroyInstance();
+//        MainApplication.destroyInstance();
     }
 
     @Override

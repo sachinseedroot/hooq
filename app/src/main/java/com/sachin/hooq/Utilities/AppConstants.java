@@ -4,8 +4,7 @@ import com.sachin.hooq.R;
 
 public class AppConstants {
 
-    public static final String API_GETLIST = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + R.string.api_key +
-            "&language=en-US&page=@pagenumber";
+    public static final String API_GETLIST = "https://api.themoviedb.org/3/movie/now_playing?api_key=@api_key&language=en-US&page=@pagenumber";
     public static final String API_GETDETAIL = "https://api.themoviedb.org/3/movie/@movie_id/now_playing?api_key=" + R.string.api_key +
             "&language=en-US";
 

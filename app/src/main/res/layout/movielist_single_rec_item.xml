@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    android:id="@+id/parent_rel"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:id="@+id/img_M"
+        android:scaleType="fitCenter"/>
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="ABC"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/tv_M"
+        android:layout_below="@id/img_M"/>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
