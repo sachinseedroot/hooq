@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
         ft.commitAllowingStateLoss();
     }
 
-    private void loadDetailPage(String key) {
+    public void loadDetailPage(int key) {
         detailFragment = DetailFragment.newInstance(key);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.enter_from_right, R.anim.hold);
@@ -102,23 +102,37 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            finishAffinity();
-            return;
-        }
+        if (fragmentStack!=null && fragmentStack.size() > 1) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Fragment fragment = fragmentStack.pop();
 
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(mcontext, "Click again to exit", Toast.LENGTH_SHORT).show();
+            ft.setCustomAnimations(R.anim.hold, R.anim.exit_to_right);
 
-        new Handler().postDelayed(new Runnable() {
+            Fragment lastFragment = fragmentStack.lastElement();
 
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
+            lastFragment.onPause();
+            ft.remove(fragment);
+            lastFragment.onResume();
+            ft.show(lastFragment);
+            ft.commit();
+        } else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                finishAffinity();
+                return;
             }
-        }, 2000);
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(mcontext, "Click again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
     }
 
     @Override

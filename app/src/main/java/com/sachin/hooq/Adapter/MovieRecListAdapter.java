@@ -8,12 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.sachin.hooq.Activity.MainActivity;
 import com.sachin.hooq.Model.MovieResponseModel;
 import com.sachin.hooq.R;
 
@@ -23,7 +25,7 @@ public class MovieRecListAdapter extends RecyclerView.Adapter {
 
     private final Context context;
 
-    interface Callbacks {
+    public interface Callbacks {
         public void onClickLoadMore();
     }
 
@@ -59,18 +61,22 @@ public class MovieRecListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof LoadMoreViewHolder) {
 
             LoadMoreViewHolder loadMoreViewHolder = (LoadMoreViewHolder) holder;
-            ((LoadMoreViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
+            ((LoadMoreViewHolder) holder).btn_load.setVisibility(View.VISIBLE);
+            ((LoadMoreViewHolder) holder).progressBar.setVisibility(View.GONE);
 
-            loadMoreViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            loadMoreViewHolder.btn_load.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mCallbacks != null)
                         mCallbacks.onClickLoadMore();
+
+                    ((LoadMoreViewHolder) holder).btn_load.setVisibility(View.GONE);
+                    ((LoadMoreViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -83,7 +89,8 @@ public class MovieRecListAdapter extends RecyclerView.Adapter {
                 elementsViewHolder.parent_rel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        int val = mFeedList.get(position)._id;
+                        ((MainActivity) context).loadDetailPage(val);
                     }
                 });
             }
@@ -146,11 +153,12 @@ public class MovieRecListAdapter extends RecyclerView.Adapter {
 
     public class LoadMoreViewHolder extends RecyclerView.ViewHolder {
 
+        private Button btn_load;
         private ProgressBar progressBar;
-
 
         public LoadMoreViewHolder(View itemView) {
             super(itemView);
+            btn_load = (Button) itemView.findViewById(R.id.btn_load);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
 
         }

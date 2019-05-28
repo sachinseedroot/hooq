@@ -72,7 +72,7 @@ public class MovieResponseModel implements Parcelable {
 //    }
 
     public MovieResponseModel(JSONObject jsonObject) {
-        _id = jsonObject.optInt("_id");
+        _id = jsonObject.optInt("id");
         title = jsonObject.optString("title");
         overview = jsonObject.optString("overview");
         release_date = jsonObject.optString("release_date");

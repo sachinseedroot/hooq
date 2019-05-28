@@ -16,9 +16,13 @@ import android.widget.TextView;
 
 import com.sachin.hooq.Activity.MainActivity;
 import com.sachin.hooq.Adapter.MovieRecListAdapter;
+import com.sachin.hooq.Base.Presenter;
+import com.sachin.hooq.Base.ResponseInterface;
 import com.sachin.hooq.Controller.MainApplication;
 import com.sachin.hooq.Model.MovieResponseModel;
 import com.sachin.hooq.R;
+import com.sachin.hooq.Utilities.AppConstants;
+import com.sachin.hooq.Utilities.AppUtilities;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,11 +30,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ResponseInterface.view {
     private Context mcontext;
     private RecyclerView hq_recyclerview;
     private TextView hq_lbl_tv;
     private ArrayList<MovieResponseModel> movieResponseModels;
+    private int pageNumber = 1;
+    private MovieRecListAdapter movieRecListAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -60,8 +66,9 @@ public class HomeFragment extends Fragment {
         //Initialization
         hq_lbl_tv = (TextView) view.findViewById(R.id.hq_lbl_tv);
         hq_recyclerview = (RecyclerView) view.findViewById(R.id.hq_recyclerview);
+        final Presenter presenter = new Presenter(this);
 
-        final MovieRecListAdapter movieRecListAdapter = new MovieRecListAdapter(mcontext, movieResponseModels);
+        movieRecListAdapter = new MovieRecListAdapter(mcontext, movieResponseModels);
         final GridLayoutManager linearLayoutManager = new GridLayoutManager(mcontext, 2);
         hq_recyclerview.setLayoutManager(linearLayoutManager);
 
@@ -74,5 +81,64 @@ public class HomeFragment extends Fragment {
         movieRecListAdapter.setWithFooter(true);
         movieRecListAdapter.setWithHeader(true);
         hq_recyclerview.setAdapter(movieRecListAdapter);
+        movieRecListAdapter.setCallback(new MovieRecListAdapter.Callbacks() {
+            @Override
+            public void onClickLoadMore() {
+                pageNumber = pageNumber + 1;
+                presenter.getData(AppConstants.API_GETLIST
+                        .replace("@pagenumber", Integer.toString(pageNumber))
+                        .replace("@api_key", mcontext.getResources().getString(R.string.api_key)));
+            }
+        });
+    }
+
+    @Override
+    public void displayDialogError(Throwable throwable) {
+        AppUtilities.showAlertDialog(mcontext, "Error!", throwable.getMessage());
+    }
+
+    @Override
+    public void sendResult(Object jsonObject) {
+        new LoadMovies().execute(jsonObject);
+    }
+
+    public class LoadMovies extends AsyncTask<Object, Void, ArrayList<MovieResponseModel>> {
+
+        @Override
+        protected ArrayList<MovieResponseModel> doInBackground(Object... objects) {
+            ArrayList<MovieResponseModel> movieResponseModels = new ArrayList<>();
+            try {
+                JSONObject jsonObject = new JSONObject(objects[0].toString());
+                if (jsonObject != null && jsonObject.length() > 0) {
+                    JSONArray jsonArray = jsonObject.optJSONArray("results");
+                    if (jsonArray != null && jsonArray.length() > 0) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.optJSONObject(i);
+                            if (jsonObject1 != null) {
+                                MovieResponseModel movieResponseModel = new MovieResponseModel(jsonObject1);
+                                if (movieResponseModel != null) {
+                                    movieResponseModels.add(movieResponseModel);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return movieResponseModels;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<MovieResponseModel> movieResponseMod) {
+            super.onPostExecute(movieResponseMod);
+            if (movieResponseMod != null && movieResponseMod.size() > 0) {
+                movieResponseModels.addAll(movieResponseMod);
+                movieRecListAdapter.notifyDataSetChanged();
+            } else {
+                AppUtilities.showAlertDialog(mcontext, "Error", "Sorry, coudn't load at this time.");
+            }
+        }
     }
 }

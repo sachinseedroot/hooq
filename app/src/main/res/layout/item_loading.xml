@@ -12,9 +12,20 @@
         android:layout_gravity="center_horizontal"
         android:indeterminate="true"
         android:indeterminateTintMode="src_atop"
+        android:visibility="gone"
         android:indeterminateTint="@color/colorPrimaryDark"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
+        />
+
+    <Button
+        android:layout_gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="200dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_load"
+        android:text="Load more"
         />
 
 </LinearLayout>
