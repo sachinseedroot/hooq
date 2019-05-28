@@ -61,9 +61,18 @@ public class HomeFragment extends Fragment {
         hq_lbl_tv = (TextView) view.findViewById(R.id.hq_lbl_tv);
         hq_recyclerview = (RecyclerView) view.findViewById(R.id.hq_recyclerview);
 
-        MovieRecListAdapter movieRecListAdapter = new MovieRecListAdapter(mcontext,movieResponseModels);
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(mcontext,2);
+        final MovieRecListAdapter movieRecListAdapter = new MovieRecListAdapter(mcontext, movieResponseModels);
+        final GridLayoutManager linearLayoutManager = new GridLayoutManager(mcontext, 2);
         hq_recyclerview.setLayoutManager(linearLayoutManager);
+
+        linearLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return movieRecListAdapter.isPositionFooter(position) ? linearLayoutManager.getSpanCount() : 1;
+            }
+        });
+        movieRecListAdapter.setWithFooter(true);
+        movieRecListAdapter.setWithHeader(true);
         hq_recyclerview.setAdapter(movieRecListAdapter);
     }
 }
