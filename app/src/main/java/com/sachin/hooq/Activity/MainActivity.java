@@ -22,7 +22,7 @@ import java.util.Stack;
 public class MainActivity extends AppCompatActivity implements ResponseInterface.view {
 
     private Context mcontext;
-    public static boolean AppInForeground;
+    public static boolean AppInForeground = true;
     private Stack<Fragment> fragmentStack;
     private FrameLayout frameLayoutContainer;
     private SplashFragment splashFragment;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
 
     @Override
     public void onBackPressed() {
-        if (fragmentStack!=null && fragmentStack.size() > 1) {
+        if (fragmentStack != null && fragmentStack.size() > 1) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             Fragment fragment = fragmentStack.pop();
 

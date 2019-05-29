@@ -7,7 +7,7 @@
         android:layout_width="150dp"
         android:layout_height="200dp"
         android:id="@+id/img_M"
-        android:scaleType="fitCenter"/>
+        android:scaleType="centerInside"/>
     <TextView
         android:layout_width="150dp"
         android:layout_height="wrap_content"
