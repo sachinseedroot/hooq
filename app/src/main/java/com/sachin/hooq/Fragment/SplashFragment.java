@@ -51,10 +51,14 @@ public class SplashFragment extends Fragment implements ResponseInterface.view {
         //Initialization
         progressbar_loading = (ProgressBar) view.findViewById(R.id.progressbar_loading);
         progressbar_loading.setVisibility(View.VISIBLE);
-        Presenter presenter = new Presenter(this);
-        presenter.getData(AppConstants.API_GETLIST
-                .replace("@pagenumber", "1")
-                .replace("@api_key", mcontext.getResources().getString(R.string.api_key)));
+        if(AppUtilities.isNetworkAvailable(mcontext)) {
+            Presenter presenter = new Presenter(this);
+            presenter.getData(AppConstants.API_GETLIST
+                    .replace("@pagenumber", "1")
+                    .replace("@api_key", mcontext.getResources().getString(R.string.api_key)));
+        }else{
+            AppUtilities.showAlertDialog(mcontext,"No internet!","Please check your connection.");
+        }
     }
 
     @Override
@@ -74,7 +78,7 @@ public class SplashFragment extends Fragment implements ResponseInterface.view {
             ArrayList<MovieResponseModel> movieResponseModels = new ArrayList<>();
             try {
                 JSONObject jsonObject = new JSONObject(objects[0].toString());
-                if (jsonObject != null && jsonObject.length() > 0) {
+                if (jsonObject != null && jsonObject.length() > 0 && jsonObject.has("results")) {
                     JSONArray jsonArray = jsonObject.optJSONArray("results");
                     if (jsonArray != null && jsonArray.length() > 0) {
                         for (int i = 0; i < jsonArray.length(); i++) {

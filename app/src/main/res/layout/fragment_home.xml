@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="10dp"
         android:text="HOOQ MOVIES"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp" />

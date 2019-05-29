@@ -2,6 +2,7 @@ package com.sachin.hooq.Adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.sachin.hooq.Activity.MainActivity;
 import com.sachin.hooq.Model.MovieResponseModel;
 import com.sachin.hooq.R;
+import com.sachin.hooq.Utilities.AppConstants;
+import com.sachin.hooq.Utilities.AppUtilities;
 
 import java.util.ArrayList;
 
@@ -66,9 +69,9 @@ public class MovieRecListAdapter extends RecyclerView.Adapter {
         if (holder instanceof LoadMoreViewHolder) {
 
             LoadMoreViewHolder loadMoreViewHolder = (LoadMoreViewHolder) holder;
-            ((LoadMoreViewHolder) holder).btn_load.setVisibility(View.VISIBLE);
-            ((LoadMoreViewHolder) holder).progressBar.setVisibility(View.GONE);
-
+            loadMoreViewHolder.btn_load.setVisibility(View.VISIBLE);
+            loadMoreViewHolder.progressBar.setVisibility(View.GONE);
+            loadMoreViewHolder.btn_load.setTypeface(AppUtilities.applyTypeFace(context, AppConstants.font_Roboto_Bold));
             loadMoreViewHolder.btn_load.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -84,13 +87,20 @@ public class MovieRecListAdapter extends RecyclerView.Adapter {
             ElementsViewHolder elementsViewHolder = (ElementsViewHolder) holder;
             if (position < mFeedList.size()) {
                 elementsViewHolder.name.setText(mFeedList.get(position).title);
+                elementsViewHolder.name.setTypeface(AppUtilities.applyTypeFace(context, AppConstants.font_Roboto_Reg));
                 String imageURL = "https://image.tmdb.org/t/p/w500/" + mFeedList.get(position).poster_path;
-                Glide.with(context).load(imageURL).into(elementsViewHolder.icon);
+                Glide.with(context)
+                        .load(imageURL)
+                        .placeholder(context.getResources().getDrawable(R.drawable.hooqlogo))
+                        .into(elementsViewHolder.icon);
                 elementsViewHolder.parent_rel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int val = mFeedList.get(position)._id;
-                        ((MainActivity) context).loadDetailPage(val);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("data", mFeedList);
+                        bundle.putInt("key", val);
+                        ((MainActivity) context).loadDetailPage(bundle);
                     }
                 });
             }

@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
         ft.commitAllowingStateLoss();
     }
 
-    public void loadDetailPage(int key) {
-        detailFragment = DetailFragment.newInstance(key);
+    public void loadDetailPage(Bundle bundle) {
+        detailFragment = DetailFragment.newInstance(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.enter_from_right, R.anim.hold);
         ft.add(frameLayoutContainer.getId(), detailFragment);

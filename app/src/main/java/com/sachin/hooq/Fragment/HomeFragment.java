@@ -65,6 +65,7 @@ public class HomeFragment extends Fragment implements ResponseInterface.view {
 
         //Initialization
         hq_lbl_tv = (TextView) view.findViewById(R.id.hq_lbl_tv);
+        hq_lbl_tv.setTypeface(AppUtilities.applyTypeFace(mcontext, AppConstants.font_Roboto_Bold));
         hq_recyclerview = (RecyclerView) view.findViewById(R.id.hq_recyclerview);
         final Presenter presenter = new Presenter(this);
 

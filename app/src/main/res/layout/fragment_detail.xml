@@ -8,7 +8,7 @@
         android:id="@+id/detail_img"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/black"
         android:scaleType="fitCenter" />
 
     <LinearLayout
@@ -24,12 +24,12 @@
 
             <TextView
                 android:id="@+id/titlelb"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:padding="5dp"
                 android:text="Title: "
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/titleTV"
@@ -38,8 +38,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@+id/titlelb"
                 android:padding="5dp"
-                android:text="Title: "
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -48,12 +47,12 @@
 
             <TextView
                 android:id="@+id/yearlb"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:padding="5dp"
-                android:text="Title: "
-                android:textSize="16sp" />
+                android:text="Year: "
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/yearTV"
@@ -62,8 +61,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@+id/yearlb"
                 android:padding="5dp"
-                android:text="Year: "
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -72,12 +70,12 @@
 
             <TextView
                 android:id="@+id/overlb"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:padding="5dp"
-                android:text="Title: "
-                android:textSize="16sp" />
+                android:text="Desc: "
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/overTV"
@@ -86,8 +84,29 @@
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@+id/overlb"
                 android:padding="5dp"
-                android:text="Overview: "
-                android:textSize="16sp" />
+                android:textSize="12sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/genrelb"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="5dp"
+                android:text="Genre: "
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/genreTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/genrelb"
+                android:padding="5dp"
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <View
